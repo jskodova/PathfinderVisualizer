@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Node from './node/node';
 import { dijkstra, getNodesInShortestPathOrder } from '../algorithms/dijkstra';
 import { astar } from '../algorithms/astar';
-import { greedyBestFirst } from '../algorithms/greedyBestFirst'; // Import the Greedy Best-First Search algorithm
+import { greedyBestFirst } from '../algorithms/greedyBestFirst';
+import { bfs } from '../algorithms/bfs';
+import { dfs } from '../algorithms/dfs';
 
 import './pathfinder.css';
 
@@ -71,7 +73,6 @@ export default class PathfindingVisualizer extends Component {
       }, 50 * i);
     }
   }
-
   visualizeAlgorithm(algorithmName) {
     const { grid } = this.state;
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
@@ -85,9 +86,15 @@ export default class PathfindingVisualizer extends Component {
       visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
       nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     } else if (algorithmName === 'greedyBestFirst') {
-      visitedNodesInOrder = greedyBestFirst(grid, startNode, finishNode); // Call the Greedy Best-First Search algorithm
+      visitedNodesInOrder = greedyBestFirst(grid, startNode, finishNode);
       nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    }
+    } else if (algorithmName === 'bfs') {
+      visitedNodesInOrder = bfs(grid, startNode, finishNode); // Call the Breadth-First Search algorithm
+      nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+    } else if (algorithmName === 'dfs') {
+        visitedNodesInOrder = dfs(grid, startNode, finishNode); // Call the Breadth-First Search algorithm
+        nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+      }
 
     this.animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
   }
@@ -105,6 +112,12 @@ export default class PathfindingVisualizer extends Component {
         </button>
         <button onClick={() => this.visualizeAlgorithm('greedyBestFirst')}>
           Visualize Greedy Best-First Search Algorithm
+        </button>
+        <button onClick={() => this.visualizeAlgorithm('bfs')}>
+          Visualize BFS Algorithm
+        </button>
+        <button onClick={() => this.visualizeAlgorithm('dfs')}>
+          Visualize DFS Algorithm
         </button>
         <div className="grid">
           {grid.map((row, rowIdx) => {
