@@ -1,0 +1,41 @@
+Pathfinder Component
+The Pathfinder component is a React component responsible for rendering a grid of nodes used in a pathfinding visualization. It initializes the grid of nodes in its state and renders them using the Node component.
+
+Props
+The Pathfinder component does not accept any props.
+
+State
+The Pathfinder component maintains the following state:
+
+nodes (array): Represents the grid of nodes. Each node is an object with properties col, row, isStart, and isFinish.
+Lifecycle Methods
+componentDidMount()
+This lifecycle method is called after the component has been mounted (i.e., inserted into the DOM). In this method, the nodes state is initialized by creating a 2D array of nodes. The grid size is set to 20 rows and 50 columns. The start node is located at row 10, column 5, and the finish node is located at row 10, column 45.
+
+Render Method
+render()
+This method is responsible for rendering the component. It displays the grid of nodes as a series of <div> elements. Each row of nodes is rendered within a parent <div>. The individual nodes are rendered using the Node component.
+
+The rendered JSX structure is as follows:
+
+jsx
+Copy code
+<div className="grid">
+  {nodes.map((row, rowIdx) => (
+    <div key={rowIdx}>
+      {row.map((node, colIdx) => (
+        <Node
+          key={colIdx}
+          isStart={node.isStart}
+          isFinish={node.isFinish}
+          test="foo"
+          tests="kappa"
+        />
+      ))}
+    </div>
+  ))}
+</div>
+The nodes state array is mapped to generate the rows of nodes. Within each row, the individual nodes are mapped to render the Node component. The isStart and isFinish properties of each node are passed as props to the Node component.
+
+External CSS
+The component imports a CSS file named "pathfinder.css" using the import statement. The CSS file should be located in the same directory as the component file.
